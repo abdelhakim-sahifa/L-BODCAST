@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'BODCAST</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
+</head>
+<body>
+    <div id="container">
+
+    </div>
+    <button id="logout">log out</button>
+    <script type="module">
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+
+
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
+        authDomain: "l-bodcast.firebaseapp.com",
+        projectId: "l-bodcast",
+        storageBucket: "l-bodcast.appspot.com",  // Fixed URL
+        messagingSenderId: "1007184602665",
+        appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
+        measurementId: "G-BX9F49FM08"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+
+
+        const userdata = localStorage.getItem('userCredential')
+        console.log(userdata)
+        const container = document.getElementById('container')
+     
+
+
+            onAuthStateChanged(auth, user => {
+        if (user) {
+            console.log("User is logged in:", user);
+            
+        container.innerHTML = `
+            <p>
+             user email :    ${user.email}
+
+            </p>
+            `
+            
+        } else {
+           window.location.href = 'loginMethod.html'
+        }
+    });
+
+
+    function logout() {
+    auth.signOut()
+        .then(() => {
+            window.location.href = 'loginMethod.html'
+        })
+        .catch(error => {
+            alert(error.message);
+        });
+
+}
+
+document.getElementById('logout').addEventListener('click'
+    , ()=>{
+        logout();
+    }
+)
+
+    </script>
+
+
+  </script>
+</body>
+</html>
