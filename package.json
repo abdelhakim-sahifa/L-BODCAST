@@ -1,0 +1,11 @@
+{
+    "name": "L-BODCAST",
+    "version": "1.0.0",
+    "description": "A podcast project",
+    "main": "index.js",
+    "scripts": {
+      "build": "echo \"Building the project...\""
+    },
+    "author": "abdelhakim sahifa",
+    "license": "ISC"
+  }
