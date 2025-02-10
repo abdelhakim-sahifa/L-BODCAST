@@ -12,68 +12,78 @@
     </div>
     <button id="logout">log-out</button>
     <script type="module">
-          import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-
-
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
-        authDomain: "l-bodcast.firebaseapp.com",
-        projectId: "l-bodcast",
-        storageBucket: "l-bodcast.appspot.com",  // Fixed URL
-        messagingSenderId: "1007184602665",
-        appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
-        measurementId: "G-BX9F49FM08"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-
-
-        const userdata = localStorage.getItem('userCredential')
-        console.log(userdata)
-        const container = document.getElementById('container')
-     
-
-
-            onAuthStateChanged(auth, user => {
-        if (user) {
-            console.log("User is logged in:", user);
-            
-        container.innerHTML = `
-            <p>
-             user email :    ${user.email}
-
-            </p>
-            `
-            
-        } else {
-           window.location.href = 'welcom.html'
-        }
-    });
-
-
-    function logout() {
-    auth.signOut()
-        .then(() => {
-            window.location.href = "loginMethod.html"
-        })
-        .catch(error => {
-            alert(error.message);
+        // Import Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+    
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
+            authDomain: "l-bodcast.firebaseapp.com",
+            projectId: "l-bodcast",
+            databaseURL: "https://l-bodcast-default-rtdb.firebaseio.com/",
+            storageBucket: "l-bodcast.appspot.com",
+            messagingSenderId: "1007184602665",
+            appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
+            measurementId: "G-BX9F49FM08"
+        };
+    
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getDatabase(app); // ✅ Fix: Pass app to ensure correct initialization
+    
+        // Retrieve user data from local storage (if needed)
+        const userdata = localStorage.getItem('userCredential');
+        console.log("User Credential Data:", userdata);
+    
+        // Get reference to HTML container
+        const container = document.getElementById('container');
+    
+        // Listen for authentication state changes
+        onAuthStateChanged(auth, async (user) => { // ✅ Fix: Correct syntax, first argument is `auth`
+            if (user) {
+                console.log("User is logged in:", user);
+    
+                try {
+                    // ✅ Fetch user profile picture from Firebase Database
+                    const snapshot = await get(ref(db, `users/${user.uid}/profilePic`));
+                    const profilePic = snapshot.exists() ? snapshot.val() : "default-profile.png"; // Use default if not found
+    
+                    // ✅ Display user info
+                    container.innerHTML = `
+                        <p>User Email: ${user.email}</p>
+                        <img src="${profilePic}" alt="Profile Picture" width="100" height="100">
+                    `;
+                } catch (error) {
+                    console.error("Error fetching profile picture:", error.message);
+                }
+            } else {
+                console.log("User is not logged in, redirecting...");
+                window.location.href = 'welcom.html'; // ✅ Redirect to login if user is not authenticated
+            }
         });
-
-}
-
-document.getElementById('logout').addEventListener('click'
-    , ()=>{
-        logout();
-    }
-)
-
+    
+        // Function to log out user
+        function logout() {
+            signOut(auth) // ✅ Fix: Corrected `signOut(auth)`
+                .then(() => {
+                    console.log("User logged out");
+                    window.location.href = "loginMethod.html"; // Redirect to login page
+                })
+                .catch(error => {
+                    alert("Error logging out: " + error.message);
+                });
+        }
+    
+        // Attach event listener to logout button
+        document.getElementById('logout').addEventListener('click', () => {
+            logout();
+        });
+    
     </script>
-
+    
 
   </script>
 </body>
