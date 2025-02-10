@@ -161,7 +161,7 @@ document.getElementById('login').addEventListener('click'
             email: user.email,
             profilePic: profilePic 
         });
-        window.location.href = 'index.html';
+   
       } catch (error) {
         console.error('Google Sign-In error:', error.message);
       }
@@ -169,7 +169,8 @@ document.getElementById('login').addEventListener('click'
   
     onAuthStateChanged(auth, user => {
       if (user) {
-         window.location.href = "index.html"
+        window.location.href = "chooseUsername.html?useruid=" + user.uid
+
       } else {
         console.log("User is logged out");
       }
