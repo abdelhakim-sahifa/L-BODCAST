@@ -1,0 +1,62 @@
+{
+   
+        "podcast_id_1": {
+            "title": "",
+            "cover": "",
+            "description": "",
+            "host": "",
+            "guests": [],
+            "category": "",
+            "episodes": [
+                {
+                    "episode_id": "",
+                    "title": "",
+                    "description": "",
+                    "audio_url": "",
+                    "duration": "",
+                    "release_date": ""
+                }
+            ],
+            "language": "",
+            "release_schedule": "",
+            "rating": 0,
+            "platform_links": {
+                "spotify": "",
+                "apple_podcasts": "",
+                "google_podcasts": "",
+                "youtube": ""
+            }
+        }
+        , 
+    
+        
+        "podcast_id_2": {
+            "title": "",
+            "cover": "",
+            "description": "",
+            "host": "",
+            "guests": [],
+            "category": "",
+            "episodes": [
+                {
+                    "episode_id": "",
+                    "title": "",
+                    "description": "",
+                    "audio_url": "",
+                    "duration": "",
+                    "release_date": ""
+                }
+            ],
+            "language": "",
+            "release_schedule": "",
+            "rating": 0,
+            "platform_links": {
+                "spotify": "",
+                "apple_podcasts": "",
+                "google_podcasts": "",
+                "youtube": ""
+            }
+        }
+        
+    
+}

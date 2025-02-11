@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'BODCAST</title>
+    <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
     
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
@@ -60,35 +61,261 @@
         #bottomDiv.show {
             bottom: 0;
         }
+        .categories-section , .TrendingPodcasts-section{
+            gap: 10px;
+           margin: 20px 0 ;
+        }
+        .sectionTitle{
+            color: white;
+            padding: 0 10px ; 
+            font-size: 20px;
+            font-weight: 600;
+        }
+        #categories{
+            margin-top: 15px;
+            gap: 10px;
+            padding: 0 10px;
+            overflow-x: scroll;
+            scrollbar-width: none;
+            display: flex;
+        }
+        .categorieLabel{
+        
+        color: white;
+        border: solid 2px white;
+        padding: 4px;
+        border-radius: 10px;
+        transition: all .3s ease-in-out;
+    
+    }
+
+    .chosenCategorie.categorieLabel{
+        color: black;
+        border: solid 2px white;
+    
+        background-color: white;
+        padding: 4px;
+        border-radius: 10px;
+        transition: all .3s ease-in-out;
+    }
+
+    #TrendingPodcasts{
+        padding: 10px;
+        display: flex;
+        gap: 10px;
+        overflow-x: scroll;
+        scrollbar-width: none;
+    }
+    .podcastCard {
+        border: solid 2px transparent;
+
+        border-radius: 10px;
+        width: 250px;
+        height: 250px;
+        transition:  all .3s ease-in-out;
+        
+    
+    }
+    .podcastCard:hover{
+        border: solid 2px white;
+
+        box-shadow: 1px -1px 10px 2px white;
+        transition:  all .3s ease-in-out;
+
+    }
+
+
+    #TopCreators{
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        overflow-x: scroll;
+        scrollbar-width: none;
+    }
+    .creatorCard{
+        border: solid 2px transparent;
+        width: 100px;
+        height: 100px;
+        transition: all .3s ease-in-out;
+        border-radius: 18px;
+
+    }
+    .creatorCard:hover{
+        border: solid 2px white;
+        transition: all .3s ease-in-out;
+        box-shadow: 1px -1px 10px 2px white;
+
+
+    }
     </style>
     
 </head>
 <body>
 
     <nav>
-        <img class="logo" src="https://i.ibb.co/LD68RFCc/icon.png" alt="L'BODCAST">
-        <img id="profilePic" src="https://letter-image-generator.vercel.app/generate_image?firstname=John&lastname=Doe" alt="">
+        <img class="logo" src="https://i.ibb.co/rTWndbQ/logo.png" alt="L'BODCAST">
+        <img id="profilePic" src="https://letter-image-generator.vercel.app/generate_image?firstname='&lastname=b" alt="">
     </nav>
 
     <div id="bottomDiv">
         <p id="name-b"><strong>Name:</strong> John</p>
         <p id="email-b"><strong>Email:</strong> john@gmail.com</p>
     <button id="logout">log-out</button>
+ </div>
         
-    </div>
+ <div class="categories-section">
+    <label class="sectionTitle">Categories</label>
+   <div id="categories">
+
+   </div>
+</div>
+
+
+
+
+<div class="TrendingPodcasts-section">
+    <label class="sectionTitle">Trending podcasts</label>
+   <div id="TrendingPodcasts">
+
+   </div>
+</div>
+
+
+<div class="Topcreators-section">
+    <label class="sectionTitle">Top creators</label>
+   <div id="TopCreators">
+
+   </div>
+</div>
+
+
 
     <script>
         const bottomDiv = document.getElementById('bottomDiv');
         const profilePic = document.getElementById('profilePic');
+        const categories =document.getElementById('categories')
 
         if (bottomDiv && profilePic) {
             profilePic.addEventListener('click', () => {
                 bottomDiv.classList.toggle('show');
             });
         }
+
+ const podcastCategories = [
+    "all" , 
+  "News",
+  "Politics",
+  "Technology",
+  "Science",
+  "Education",
+  "Business",
+  "Finance",
+  "Crime",
+  "Health",
+  "Wellness",
+  "Comedy",
+  "Sports",
+  "Entertainment",
+  "Culture",
+  "SelfImprovement",
+  "Fiction",
+  "Philosophy",
+  "Spirituality"
+];
+
+for (const categorieName of podcastCategories) {
+    const label = document.createElement("label");
+    label.innerHTML = categorieName;
+    label.id = categorieName;
+    label.className = categorieName == 'all' ?  "categorieLabel chosenCategorie" : "categorieLabel" ;
+
+
+    label.addEventListener("click", (event) => {
+        document.querySelectorAll(".categorieLabel").forEach((el) => {
+            el.classList.remove("chosenCategorie");
+        });
+        event.target.classList.toggle("chosenCategorie");
+    });
+
+    categories.append(label);
+}
+
+
+
+/*const podcastsMap = {
+    "podcat_id_1" : {
+        "cover" : "https://i.ibb.co/NBYWskR/1.png"
+    },
+    "podcat_id_2" : {
+        "cover" : "https://i.ibb.co/NBYWskR/1.png"
+    },
+    "podcat_id_3" : {
+        "cover" : "https://i.ibb.co/NBYWskR/1.png"
+    },
+}
+*/
+function displayPodcasts(podcastsMap){
+   const trendingPodcasts = document.getElementById('TrendingPodcasts')
+for(const podcastId in podcastsMap){
+    const podcastCover = podcastsMap[podcastId].cover
+    const podcastCard = document.createElement('img')
+    podcastCard.src = podcastCover
+    podcastCard.id = podcastId 
+    podcastCard.className = "podcastCard"
+    podcastCard.addEventListener('click' , 
+        () => {console.log(podcastId)}
+    )
+    trendingPodcasts.append(podcastCard)
+    
+}
+ 
+}
+//displayPodcasts(podcastsMap)
+
+
+/*const creatorsMap = {
+
+    "creator_id_1" : {
+        "avatar" : "https://i.ibb.co/4wkTPcn9/icon-2.png"
+    },
+    "creator_id_2" : {
+        "avatar" : "https://i.ibb.co/4wkTPcn9/icon-2.png"
+    },
+    "creator_id_3" : {
+        "avatar" : "https://i.ibb.co/4wkTPcn9/icon-2.png"
+    },
+    "creator_id_4" : {
+        "avatar" : "https://i.ibb.co/4wkTPcn9/icon-2.png"
+    },
+    "creator_id_5" : {
+        "avatar" : "https://i.ibb.co/4wkTPcn9/icon-2.png"
+    },
+ 
+}*/
+
+function displayCreators(creatorsMap){
+const topCreators =  document.getElementById('TopCreators')
+
+for(const creator_id in creatorsMap){
+    const creatorAvatar = creatorsMap[creator_id].avatar 
+    const creatorCard = document.createElement('img') ; 
+    creatorCard.src = creatorAvatar 
+    creatorCard.id = creator_id 
+    creatorCard.className = 'creatorCard'
+    creatorCard.addEventListener('click' , () => {console.log(creator_id) ; })
+    topCreators.append(creatorCard)
+
+
+}
+
+}
+
+//displayCreators(creatorsMap)
+
+
+
+
     </script>
-
-
 
 
 
@@ -126,7 +353,7 @@
     // Listen for authentication state changes
     onAuthStateChanged(auth, async (user) => { // ✅ Fix: Correct syntax, first argument is `auth`
         if (user) {
-            console.log("User is logged in:", user);
+            console.log("User is logged in:", user.email);
 
             try {
               //  const usernamesnapshot = await get(ref(db, `users/${user.uid}/profilePic`));
@@ -150,6 +377,21 @@
         }
     });
 
+
+
+
+    const podcastsMap = await get(ref(db, `podcasts`));
+    const creatorsMap = await get(ref(db, `creators`));
+
+    displayPodcasts(podcastsMap.val())
+
+    displayCreators(creatorsMap.val())
+
+
+
+
+
+
     // Function to log out user
     function logout() {
         signOut(auth) // 
@@ -168,9 +410,6 @@
     });
 
 </script>
-
-
-
 
 
 
