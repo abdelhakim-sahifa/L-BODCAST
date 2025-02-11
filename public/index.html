@@ -4,87 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'BODCAST</title>
-    <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        * {
+            font-family: "Poppins", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+           
+            height: 100vh;
+          
+        }
+
+        nav {
+            width: 100%;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 150px;
+        }
+
+        #profilePic {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        #bottomDiv {
+            padding: 20px;
+            width: 100%;
+            color: black;
+            background-color: white;
+            height: 400px;
+            position: fixed;
+            bottom: -400px;  /* Initially hidden */
+            left: 0;
+            border-radius: 20px 20px 0 0;
+            transition: bottom 0.3s ease-in-out;
+        }
+
+        /* Show class to make it slide up */
+        #bottomDiv.show {
+            bottom: 0;
+        }
+    </style>
+    
 </head>
 <body>
-    <div id="container">
 
-    </div>
+    <nav>
+        <img class="logo" src="https://i.ibb.co/LD68RFCc/icon.png" alt="L'BODCAST">
+        <img id="profilePic" src="https://letter-image-generator.vercel.app/generate_image?firstname=John&lastname=Doe" alt="">
+    </nav>
+
+    <div id="bottomDiv">
+        <p id="name-b"><strong>Name:</strong> John</p>
+        <p id="email-b"><strong>Email:</strong> john@gmail.com</p>
     <button id="logout">log-out</button>
-    <script type="module">
-        // Import Firebase modules
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-        import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
-    
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
-            authDomain: "l-bodcast.firebaseapp.com",
-            projectId: "l-bodcast",
-            databaseURL: "https://l-bodcast-default-rtdb.firebaseio.com/",
-            storageBucket: "l-bodcast.appspot.com",
-            messagingSenderId: "1007184602665",
-            appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
-            measurementId: "G-BX9F49FM08"
-        };
-    
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getDatabase(app); // ✅ Fix: Pass app to ensure correct initialization
-    
-        // Retrieve user data from local storage (if needed)
-        const userdata = localStorage.getItem('userCredential');
-        console.log("User Credential Data:", userdata);
-    
-        // Get reference to HTML container
-        const container = document.getElementById('container');
-    
-        // Listen for authentication state changes
-        onAuthStateChanged(auth, async (user) => { // ✅ Fix: Correct syntax, first argument is `auth`
-            if (user) {
-                console.log("User is logged in:", user);
-    
-                try {
-                    // ✅ Fetch user profile picture from Firebase Database
-                    const snapshot = await get(ref(db, `users/${user.uid}/profilePic`));
-                    const profilePic = snapshot.exists() ? snapshot.val() : "default-profile.png"; // Use default if not found
-    
-                    // ✅ Display user info
-                    container.innerHTML = `
-                        <p>User Email: ${user.email}</p>
-                        <img src="${profilePic}" alt="Profile Picture" width="100" height="100">
-                    `;
-                } catch (error) {
-                    console.error("Error fetching profile picture:", error.message);
-                }
-            } else {
-                console.log("User is not logged in, redirecting...");
-                window.location.href = 'welcom.html'; // ✅ Redirect to login if user is not authenticated
-            }
-        });
-    
-        // Function to log out user
-        function logout() {
-            signOut(auth) // ✅ Fix: Corrected `signOut(auth)`
-                .then(() => {
-                    console.log("User logged out");
-                    window.location.href = "loginMethod.html"; // Redirect to login page
-                })
-                .catch(error => {
-                    alert("Error logging out: " + error.message);
-                });
-        }
-    
-        // Attach event listener to logout button
-        document.getElementById('logout').addEventListener('click', () => {
-            logout();
-        });
-    
-    </script>
-    
+        
+    </div>
 
-  </script>
+    <script>
+        const bottomDiv = document.getElementById('bottomDiv');
+        const profilePic = document.getElementById('profilePic');
+
+        if (bottomDiv && profilePic) {
+            profilePic.addEventListener('click', () => {
+                bottomDiv.classList.toggle('show');
+            });
+        }
+    </script>
+
+
+
+
+
+<script type="module">
+     
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-database.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
+        authDomain: "l-bodcast.firebaseapp.com",
+        projectId: "l-bodcast",
+        databaseURL: "https://l-bodcast-default-rtdb.firebaseio.com/",
+        storageBucket: "l-bodcast.appspot.com",
+        messagingSenderId: "1007184602665",
+        appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
+        measurementId: "G-BX9F49FM08"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getDatabase(app); // ✅ Fix: Pass app to ensure correct initialization
+
+    // Retrieve user data from local storage (if needed)
+    const userdata = localStorage.getItem('userCredential');
+    console.log("User Credential Data:", userdata);
+
+    // Get reference to HTML container
+    const container = document.getElementById('container');
+
+    // Listen for authentication state changes
+    onAuthStateChanged(auth, async (user) => { // ✅ Fix: Correct syntax, first argument is `auth`
+        if (user) {
+            console.log("User is logged in:", user);
+
+            try {
+              //  const usernamesnapshot = await get(ref(db, `users/${user.uid}/profilePic`));
+
+                // ✅ Fetch user profile picture from Firebase Database
+                const snapshot = await get(ref(db, `users/${user.uid}`));
+                const profilePicsrc = snapshot.exists() ? snapshot.val().profilePic : "default-profile.png"; // Use default if not found
+                const displayName = snapshot.exists() ? snapshot.val().firstName : "default-profile.png"; // Use default if not found
+             
+
+                profilePic.src = profilePicsrc
+                document.getElementById('name-b').innerHTML = `<strong>Name:</strong> ${displayName}`
+                document.getElementById('email-b').innerHTML = `<strong>Email:</strong> ${user.email}`
+              
+            } catch (error) {
+                console.error("Error fetching profile picture:", error.message);
+            }
+        } else {
+            console.log("User is not logged in, redirecting...");
+            window.location.href = 'welcom.html'; 
+        }
+    });
+
+    // Function to log out user
+    function logout() {
+        signOut(auth) // 
+            .then(() => {
+                console.log("User logged out");
+                window.location.href = "loginMethod.html"; // Redirect to login page
+            })
+            .catch(error => {
+                alert("Error logging out: " + error.message);
+            });
+    }
+
+    // Attach event listener to logout button
+    document.getElementById('logout').addEventListener('click', () => {
+        logout();
+    });
+
+</script>
+
+
+
+
+
+
 </body>
 </html>
