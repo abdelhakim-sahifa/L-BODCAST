@@ -5,9 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L'BODCAST</title>
     <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
-    
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+        /* Define color variables in :root */
+        :root {
+    /* Background Colors */
+    --bg-primary: black; /* Dark gray for primary background */
+    --bg-secondary: #1E1E1E; /* Slightly lighter gray for secondary elements */
+    --bg-card: #2A2A2A; /* Card background, slightly lighter than secondary */
+
+    /* Text Colors */
+    --text-primary: #E0E0E0; /* Light gray for primary text */
+    --text-secondary: #B0B0B0; /* Slightly muted gray for secondary text */
+    --text-hover: #FFFFFF; /* Pure white for hover states */
+
+    /* Border Colors */
+    --border-primary: #404040; /* Subtle gray for borders */
+    --border-secondary: #2A2A2A; /* Slightly darker gray for secondary borders */
+
+    /* Shadow Colors */
+    --shadow-primary: rgba(0, 0, 0, 0.5); /* Dark shadow for depth */
+}
 
         * {
             font-family: "Poppins", sans-serif;
@@ -17,12 +36,10 @@
         }
 
         body {
-            background-color: black;
+            background-color: var(--bg-primary);
             display: flex;
             flex-direction: column;
-           
             height: 100vh;
-          
         }
 
         nav {
@@ -47,8 +64,8 @@
         #bottomDiv {
             padding: 20px;
             width: 100%;
-            color: black;
-            background-color: white;
+            color: var(--text-secondary);
+            background-color: var(--bg-secondary);
             height: 400px;
             position: fixed;
             bottom: -400px;  /* Initially hidden */
@@ -61,17 +78,20 @@
         #bottomDiv.show {
             bottom: 0;
         }
-        .categories-section , .TrendingPodcasts-section{
+
+        .categories-section, .TrendingPodcasts-section {
             gap: 10px;
-           margin: 20px 0 ;
+            margin: 20px 0;
         }
-        .sectionTitle{
-            color: white;
-            padding: 0 10px ; 
+
+        .sectionTitle {
+            color: var(--text-primary);
+            padding: 0 10px;
             font-size: 20px;
             font-weight: 600;
         }
-        #categories{
+
+        #categories {
             margin-top: 15px;
             gap: 10px;
             padding: 0 10px;
@@ -79,74 +99,115 @@
             scrollbar-width: none;
             display: flex;
         }
-        .categorieLabel{
-        
-        color: white;
-        border: solid 2px white;
-        padding: 4px;
-        border-radius: 10px;
-        transition: all .3s ease-in-out;
-    
-    }
 
-    .chosenCategorie.categorieLabel{
-        color: black;
-        border: solid 2px white;
-    
-        background-color: white;
-        padding: 4px;
-        border-radius: 10px;
-        transition: all .3s ease-in-out;
-    }
+        .categorieLabel {
+            color: var(--text-primary);
+            border: solid 2px var(--border-primary);
+            padding: 4px;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
 
-    #TrendingPodcasts{
-        padding: 10px;
-        display: flex;
-        gap: 10px;
-        overflow-x: scroll;
-        scrollbar-width: none;
-    }
-    .podcastCard {
-        border: solid 2px transparent;
+        .chosenCategorie.categorieLabel {
+            color: var(--text-secondary);
+            border: solid 2px var(--border-primary);
+            background-color: var(--bg-secondary);
+            padding: 4px;
+            border-radius: 10px;
+            transition: all 0.3s ease-in-out;
+        }
 
-        border-radius: 10px;
-        width: 250px;
-        height: 250px;
-        transition:  all .3s ease-in-out;
-        
-    
-    }
-    .podcastCard:hover{
-        border: solid 2px white;
+        #TrendingPodcasts {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            overflow-x: scroll;
+            scrollbar-width: none;
+        }
 
-        box-shadow: 1px -1px 10px 2px white;
-        transition:  all .3s ease-in-out;
+        .podcastCard {
+            border: solid 2px var(--border-secondary);
+            border-radius: 10px;
+            width: 250px;
+            height: 250px;
+            transition: all 0.3s ease-in-out;
+        }
 
-    }
+        .podcastCard:hover {
+            border: solid 2px var(--border-primary);
+            box-shadow: 1px -1px 10px 2px var(--shadow-primary);
+            transition: all 0.3s ease-in-out;
+        }
 
+        #TopCreators {
+            display: flex;
+            gap: 10px;
+            padding: 10px;
+            overflow-x: scroll;
+            scrollbar-width: none;
+        }
 
-    #TopCreators{
-        display: flex;
-        gap: 10px;
-        padding: 10px;
-        overflow-x: scroll;
-        scrollbar-width: none;
-    }
-    .creatorCard{
-        border: solid 2px transparent;
-        width: 100px;
-        height: 100px;
-        transition: all .3s ease-in-out;
-        border-radius: 18px;
+        .creatorCard {
+            border: solid 2px var(--border-secondary);
+            width: 100px;
+            height: 100px;
+            transition: all 0.3s ease-in-out;
+            border-radius: 18px;
+        }
 
-    }
-    .creatorCard:hover{
-        border: solid 2px white;
-        transition: all .3s ease-in-out;
-        box-shadow: 1px -1px 10px 2px white;
+        .creatorCard:hover {
+            border: solid 2px var(--border-primary);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 1px -1px 10px 2px var(--shadow-primary);
+        }
+    </style>
 
+    <style>
 
-    }
+           /* Skeleton Loading Styles */
+           .skeleton {
+            background-color: var(--bg-secondary);
+            border-radius: 10px;
+            animation: shimmer 1.5s infinite linear;
+            background: linear-gradient(to right, var(--bg-secondary) 0%, var(--bg-card) 50%, var(--bg-secondary) 100%);
+            background-size: 200% 100%;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+                opacity: 0;
+              
+            }
+           
+            100% {
+                background-position: 200% 0;
+                opacity: 0.5;
+               
+            }
+        }
+
+        .skeleton.categorieLabel {
+            width: 100px;
+            height: 30px;
+        }
+
+        .skeleton.podcastCard {
+            width: 250px ;
+            height: 250px;
+        }
+
+        .skeleton.creatorCard {
+            width: 100px;
+            height: 100px;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+        }
     </style>
     
 </head>
@@ -162,11 +223,22 @@
         <p id="email-b"><strong>Email:</strong> john@gmail.com</p>
     <button id="logout">log-out</button>
  </div>
-        
+
+
+ 
+<div class="contant" id="contant">
+
  <div class="categories-section">
     <label class="sectionTitle">Categories</label>
    <div id="categories">
-
+    <!--
+      <div class="skeletoncategorieLabel categorieLabel"></div>
+    <div class="skeletoncategorieLabel categorieLabel"></div>
+    <div class="skeletoncategorieLabel categorieLabel"></div>
+    <div class="skeletoncategorieLabel categorieLabel"></div>
+    <div class="skeletoncategorieLabel categorieLabel"></div>
+    -->
+  
    </div>
 </div>
 
@@ -176,7 +248,11 @@
 <div class="TrendingPodcasts-section">
     <label class="sectionTitle">Trending podcasts</label>
    <div id="TrendingPodcasts">
-
+    <img src="https://i.ibb.co/Rk43MG2w/placeholder-cover-1.png" alt="a" class="podcastCard skeleton">
+    <img src="https://i.ibb.co/Rk43MG2w/placeholder-cover-1.png" alt="a" class="podcastCard skeleton">
+    <img src="https://i.ibb.co/Rk43MG2w/placeholder-cover-1.png" alt="a" class="podcastCard skeleton">
+    <img src="https://i.ibb.co/Rk43MG2w/placeholder-cover-1.png" alt="a" class="podcastCard skeleton">
+   
    </div>
 </div>
 
@@ -184,10 +260,15 @@
 <div class="Topcreators-section">
     <label class="sectionTitle">Top creators</label>
    <div id="TopCreators">
-
+    <img src="https://i.ibb.co/b5FzKnTS/icon-placeholder-1.png" class="creatorCard skeleton">
+    <img src="https://i.ibb.co/b5FzKnTS/icon-placeholder-1.png" class="creatorCard skeleton">
+    <img src="https://i.ibb.co/b5FzKnTS/icon-placeholder-1.png" class="creatorCard skeleton">
+    <img src="https://i.ibb.co/b5FzKnTS/icon-placeholder-1.png" class="creatorCard skeleton">
+   
    </div>
 </div>
 
+</div>
 
 
     <script>
@@ -263,12 +344,17 @@ for(const podcastId in podcastsMap){
     podcastCard.id = podcastId 
     podcastCard.className = "podcastCard"
     podcastCard.addEventListener('click' , 
-        () => {console.log(podcastId)}
+        () => {window.location.href = "podcast.html?id=" + podcastId }
     )
     trendingPodcasts.append(podcastCard)
+
+    
     
 }
- 
+
+document.querySelectorAll('.skeleton.podcastCard').forEach(element => {
+    element.style.display = "none";
+});
 }
 //displayPodcasts(podcastsMap)
 
@@ -307,7 +393,9 @@ for(const creator_id in creatorsMap){
 
 
 }
-
+document.querySelectorAll('.skeleton.creatorCard').forEach(element => {
+    element.style.display = "none";
+});
 }
 
 //displayCreators(creatorsMap)
@@ -316,9 +404,6 @@ for(const creator_id in creatorsMap){
 
 
     </script>
-
-
-
 <script type="module">
      
     // Import Firebase modules
