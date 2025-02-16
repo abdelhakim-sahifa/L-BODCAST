@@ -157,6 +157,49 @@
   color: gray;
 
     }
+
+    .flower-count{
+      color: gray;
+font-size: 14px;
+    }
+
+    .host-details{
+      display: flex;
+      align-items: center;
+      width: 100%;
+     
+    }
+    .nameAndBadge{
+     
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hostAndName{
+      padding: 10px;
+    
+    }
+    .btn-div{
+  
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .follow-btn{
+      background-color: white; /* Black background */
+      color: black; /* White text */
+      border: 1px solid black; /* White border */
+      padding: 10px 20px; /* Padding for better spacing */
+      font-size: 16px; /* Font size */
+      font-weight: bold; /* Bold text */
+      border-radius: 50px; /* Rounded corners */
+      cursor: pointer; /* Pointer cursor on hover */
+      transition: background-color 0.3s, color 0.3s, border-color 0.3s; 
+    }
+
+   
+
     @media (min-width: 1024px){
        
        #podcast-card {

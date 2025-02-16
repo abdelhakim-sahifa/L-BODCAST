@@ -2,6 +2,8 @@
 // Import Firebase modules
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { isFollowed , follow , unfollow} from './follow.js'; // Same directory
+
 
 // Firebase configuration
 const firebaseConfig = {
@@ -56,11 +58,52 @@ if (snapshot.exists()) {
 
     }
 )
+
+
+
+const hostSection = `
+<div class="host-details">
+<img src="${hostDetails.avatar}" alt="Host Avatar">
+<div class="hostAndName">
+  <div class="nameAndBadge">
+    <p class="host-name">${hostDetails.hostName}</p>
+    <i class="material-icons">${hostDetails.verified ? "verified" : ""}</i>
+  </div>
+  <p id="flowerCount" class="flower-count">${hostDetails.followers_count} Followers</p>
+</div>
+<div class="btn-div">
+  <button id="followBtn" class="follow-btn">Follow</button>
+</div>
+</div>
+  
+`
+
     // Fill data into HTML elements
     document.getElementById("podcast-cover").src = data.cover;
     document.getElementById("podcast-title").textContent = data.title;
     document.getElementById("podcast-description").textContent = data.description;
-    document.getElementById("podcast-host").innerHTML = ` <img src="${hostDetails.avatar}"><p> ${hostDetails.hostName}</p><i class="material-icons">${hostDetails.verified? "verified" : ""}</i> ● <p class="flower-count"> ${hostDetails.followers_count} followers </p>` ;
+    document.getElementById("podcast-host").innerHTML = hostSection ;
+    isFollowed(data.host)
+    const followBtn = document.getElementById('followBtn')
+// Ensure the click handler is an async function
+followBtn.addEventListener('click', async () => {
+    try {
+        // Await the result of isFollowed
+        const isFollowedVar = await isFollowed(data.host);
+
+        // Use the result to decide whether to follow or unfollow
+        if (isFollowedVar) {
+            await unfollow(data.host); // Await the unfollow operation
+            console.log("Unfollowed:", data.host);
+        } else {
+            await follow(data.host); // Await the follow operation
+            console.log("Followed:", data.host);
+        }
+    } catch (error) {
+        console.error("Error in follow/unfollow logic:", error);
+    }
+});
+    //document.getElementById("podcast-host").innerHTML = ` <img src="${hostDetails.avatar}"><p> ${hostDetails.hostName}</p><i class="material-icons">${hostDetails.verified? "verified" : ""}</i>  <p class="flower-count">● ${hostDetails.followers_count} followers </p>` ;
     document.getElementById("podcast-guests").textContent = `Guests: ${data.guests.join(", ")}`;
     document.getElementById("podcast-category").textContent = `Category: ${data.category}`;
     document.getElementById("podcast-language").textContent = `Language: ${data.language}`;
