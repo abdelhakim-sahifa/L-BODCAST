@@ -1,0 +1,127 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    *{
+font-family: "Poppins", serif;
+margin: 0;
+
+padding: 0;
+color: white;
+
+}
+    body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        gap: 10px;
+        background-color: black;
+    }
+
+    .logo{
+width: 200px;
+height: 200px;
+position: relative;
+bottom: -5px;
+
+}
+    input{
+        padding: 15px;
+        border: 2px solid white ;
+        border-radius: 7px;
+        background-color:transparent;
+        color: white;
+      
+       width: 300px;
+        background-size: 20px;
+        background-repeat: no-repeat;
+        background-position: 90%;
+        transition: .3s;
+        
+
+    }
+    
+    input:focus{
+        border: 4px solid white;
+        outline: none;
+        transition: .3s ;
+        padding: 15px;
+        
+    }
+    .invalid:not(:placeholder-shown) , #email:invalid:not(:placeholder-shown)  {
+        border-color: red;
+       /* background-image: url(/red.png);*/
+        box-shadow: 1px -1px 20px 2px rgb(245, 4, 8 , 0.3);
+        transition: .3s;
+        
+     
+       
+    }
+    
+    .valid:not(:placeholder-shown)  , #email:valid:not(:placeholder-shown) {
+        border-color: rgba(48, 245, 4, 0.3);
+      /*  background-image: url(/green.png);*/
+        box-shadow: 1px -1px 20px 2px rgba(48, 245, 4, 0.3);
+        transition: .3s;
+
+    }
+
+    #message{
+        color: rgb(255, 91, 91);
+        font-size: 12px;
+    }
+
+    button{
+        padding: 15px;
+        border: 4px solid white;
+        border-radius: 7px;
+        
+        color:white;
+        background-color: black;
+        font-weight: 600;
+        width: 65%;
+        transition: all.3s;
+    }
+    button:hover{
+        transition: all.3s;
+        background-color:white;
+        color: #222222;
+        box-shadow: 1px -1px 20px 2px white;
+
+    }
+
+    button:disabled {
+        border: 4px solid red;
+        color: red;
+        background-color: transparent;
+
+}
+
+button:disabled:hover {
+        border: 4px solid red;
+        color: red;
+        box-shadow: 1px -1px 20px 2px red;
+        background-color: transparent;
+
+
+
+}
+
+button:not(:disabled) {
+border: 4px solid green;
+color: green;
+background-color: transparent;
+cursor: pointer; /* Ensures it looks interactive */
+}
+
+button:not(:disabled):hover {
+border: 4px solid green;
+color: green;
+background-color: transparent;
+box-shadow: 1px -1px 20px 2px green;
+}
+
+
+
+

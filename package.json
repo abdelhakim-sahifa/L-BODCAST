@@ -4,8 +4,11 @@
     "description": "A podcast project",
     "main": "index.js",
     "scripts": {
-      "build": "echo \"Building the project...\""
+        "build": "echo \"Building the project...\""
     },
     "author": "abdelhakim sahifa",
-    "license": "ISC"
-  }
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.7"
+    }
+}

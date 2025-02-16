@@ -1,0 +1,75 @@
+
+    .body {
+        position: fixed;
+        bottom: -100vh;
+        box-sizing: border-box;
+        background-color: black;
+        color: #eaeaea;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        transition: bottom 0.3s ease-in-out;
+    
+
+    }
+    .fa-xmark{
+        padding: 10px;
+        border-radius: 50px;
+        font-size: 20px;
+        transition: all .3s ease-in-out;
+
+    }
+    .fa-xmark:hover{
+        background-color:rgba(109, 109, 109, 0.5);
+        transition: all .3s ease-in-out;
+    }
+    .player-container {
+        width: 90%;
+        max-width: 390px;
+        background: #121212;
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+    .cover {
+        width: 100%;
+        border-radius: 12px;
+    }
+    .title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-top: 12px;
+    }
+    .description {
+        font-size: 14px;
+        color: #b3b3b3;
+        margin-top: 6px;
+    }
+    .progress-container {
+        margin-top: 16px;
+        width: 100%;
+    }
+    input[type="range"] {
+        width: 100%;
+        accent-color: #1db954;
+    }
+    .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 12px;
+    }
+    .control-btn {
+        background: none;
+        border: none;
+        color: #eaeaea;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all .1s ease-in-out;
+
+    }
+    .control-btn:hover {
+        color: #1db954;
+        transition: all .1s ease-in-out;
+    }

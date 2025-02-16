@@ -1,0 +1,74 @@
+body{
+background-color: black;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+.logo{
+width: 200px;
+height: 200px;
+
+
+
+}
+.login::after{
+content: 'LOGIN';
+}
+.space{
+height: 0px;
+}
+.sinup::after{
+content: 'SINUP';
+background-color: black;
+color: white;
+border:solid 4px white; 
+width: 225px;
+
+}
+
+.sinup:hover:after{
+color: black;
+background-color: white;
+}
+
+.sinup{
+background-color: white;
+}
+.sinup i {
+color: white;
+}
+
+.container{
+position: fixed;
+bottom: 100px;
+}
+
+.or{
+display: flex;
+justify-content: center;
+align-items: center;
+position: relative;
+top: -30px;
+}
+
+.diverder{
+background-color: white;
+height: 2px;
+width: 50%;
+}
+.or label {
+
+color: white;
+padding: 10px;
+font-family: "Poppins", serif;
+font-weight: 600;
+
+}
+.googleSinup::after{
+content: 'Google';
+}
+.googleSinup:hover:after{
+content: 'Continue with Google';
+}
+

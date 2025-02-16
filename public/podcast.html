@@ -7,401 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+   <!--scripts-->
+   <script type="module" src="scripts/podcast/firebase_podcast.js"></script>
+    <script type="module" src="scripts/podcast/player.js"></script>
+   <!--styles-->
+   <link rel="stylesheet" href="styles/podcast/style_1.css">
+   <link rel="stylesheet" href="styles/podcast/skeleton.css">
+   <link rel="stylesheet" href="styles/podcast/player_body.css">
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
-    <script type="module">
-        // Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
-    authDomain: "l-bodcast.firebaseapp.com",
-    databaseURL: "https://l-bodcast-default-rtdb.firebaseio.com/",
-    projectId: "l-bodcast",
-    storageBucket: "l-bodcast.appspot.com",
-    messagingSenderId: "1007184602665",
-    appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
-    measurementId: "G-BX9F49FM08"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
-const podcastContainer = document.getElementById("podcast-card");
-const skeletonContainer = document.getElementById('skeleton-container')
-
-// Get podcast ID from URL
-function getPodcastIdFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("id");
-}
-
-
-async function getHostDetails(hostId){
-    const Ref = ref(database, `/creators/${hostId}`);
-    const snapshot = await get(Ref);
-  
-    return snapshot.val(); // Add parentheses to call val() correctly
-}
-
-
-// Function to fetch and display podcast data
-async function fetchPodcastData() {
-    const podcastId = getPodcastIdFromURL();
-    const podcastRef = ref(database, `/podcasts/${podcastId}`);
-    
-    try {
-        const snapshot = await get(podcastRef);
-        if (snapshot.exists()) {
-            const data = snapshot.val();
-           const hostDetails = await getHostDetails(data.host)
-           document.title = `${data.title} - L'BODCAST`;
-
-            // Fill data into HTML elements
-            document.getElementById("podcast-cover").src = data.cover;
-            document.getElementById("podcast-title").textContent = data.title;
-            document.getElementById("podcast-description").textContent = data.description;
-            document.getElementById("podcast-host").innerHTML = ` <img src="${hostDetails.avatar}"><p> ${hostDetails.hostName}</p><i class="material-icons">${hostDetails.verified? "verified" : ""}</i>`;
-            document.getElementById("podcast-guests").textContent = `Guests: ${data.guests.join(", ")}`;
-            document.getElementById("podcast-category").textContent = `Category: ${data.category}`;
-            document.getElementById("podcast-language").textContent = `Language: ${data.language}`;
-            document.getElementById("podcast-schedule").textContent = `Release Schedule: ${data.release_schedule}`;
-            document.getElementById("podcast-rating").textContent = `Rating: ${data.rating}`;
-
-            // Fill episode data
-            const episodesContainer = document.getElementById("episodes");
-            episodesContainer.innerHTML = ""; // Clear previous episodes if any
-            data.episodes.forEach(episode => {
-                const episodeCard = document.createElement("div");
-                episodeCard.classList.add("episode-card");
-                episodeCard.id = `episode-${episode.episode_id}`;
-
-                const episodeTitle = document.createElement("h4");
-                episodeTitle.classList.add("episode-title");
-                episodeTitle.textContent = episode.title;
-
-                const episodeDescription = document.createElement("p");
-                episodeDescription.classList.add("episode-description");
-                episodeDescription.textContent = episode.description;
-
-                const episodeDuration = document.createElement("p");
-                episodeDuration.classList.add("episode-duration");
-                episodeDuration.textContent = `Duration: ${episode.duration}`;
-
-                const episodeReleaseDate = document.createElement("p");
-                episodeReleaseDate.classList.add("episode-release-date");
-                episodeReleaseDate.textContent = `Release Date: ${episode.release_date}`;
-
-                episodeCard.appendChild(episodeTitle);
-                episodeCard.appendChild(episodeDescription);
-                episodeCard.appendChild(episodeDuration);
-                episodeCard.appendChild(episodeReleaseDate);
-
-                episodesContainer.appendChild(episodeCard);
-            });
-
-            // Fill platform links
-            const platformLinksContainer = document.getElementById("platform-links");
-            platformLinksContainer.innerHTML = ""; // Clear previous links if any
-            for (const platform in data.platform_links) {
-    const platformLink = document.createElement("a");
-    platformLink.classList.add("platform-link");
-    platformLink.href = data.platform_links[platform];
-    platformLink.target = "_blank";
-
-    // Create icon element
-    const icon = document.createElement("i");
-    icon.classList.add("fab");
-
-    // Map platform names to Font Awesome classes
-    const iconClasses = {
-        spotify: "fa-spotify",
-        apple_podcasts: "fa-apple",
-        google_podcasts: "fa-google",
-        youtube: "fa-youtube"
-    };
-
-    if (iconClasses[platform]) {
-        icon.classList.add(iconClasses[platform]);
-    } else {
-        icon.classList.add("fa-link"); // Default icon if not mapped
-    }
-
-    // Capitalize platform name and format it
-    const formattedName = platform
-        .replace("_podcasts", "") // Remove '_podcasts' suffix
-        .replace("_", " ") // Replace underscores with spaces
-        .split(" ") // Split words
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1)) // Capitalize each word
-        .join(" "); // Join words back
-
-    const textNode = document.createTextNode(" " + formattedName);
-
-    // Append icon and text to the link
-    platformLink.appendChild(icon);
-    platformLink.appendChild(textNode);
-
-    // Append the link to the container
-    platformLinksContainer.appendChild(platformLink);
-}
-
-skeletonContainer.style.display = "none"
-podcastContainer.style.display = "block"
-
-
-        } else {
-            console.error("No data available for this podcast.");
-        }
-    } catch (error) {
-        console.error("Error fetching podcast data:", error);
-    }
-}
-
-// Fetch the podcast data when the page loads
-fetchPodcastData();
-
-    </script>
-
-<style>
-    /* General reset and body styling */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #000000;
-      color: #eaeaea;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      height: fit-content;
-    }
-    nav {
-        background-color: black;
-    width: 100%;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-   position: sticky;
-   top: 0;
-
-}
-
-.logo {
-    width: 150px;
-}
-
-    #podcast-card {
-     
-   display: none;
-        width: 100%;
-      max-width: 390px;
-      background-color: black;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-    }
-
-    #podcast-cover {
-      width: 100%;
-      border-radius: 12px;
-      height: auto;
-    }
-
-    .podcast-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin: 15px 0;
-      color: #ffffff;
-    }
-    .podcast-host{
-        display: flex;
-        align-items: center;
-        font-size: 17px;
-        gap: 10px;
-  
-      border-radius: 40px;
-      padding: 15px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-      font-weight: 600;
-
-      transition: all .3s ease-in-out;
-
-    }
-    .podcast-host:hover{
-        background-color: #2c2c2c;
-        transition: all .3s ease-in-out;
-    }
-    .podcast-host img {
-        width: 35px;
-        height: 35px;
-        border-radius: 100px;
-
-        
-    }
-
-    .podcast-description,
-    .podcast-guests,
-    .podcast-category,
-    .podcast-language,
-    .podcast-schedule,
-    .podcast-rating {
-      font-size: 14px;
-      margin: 5px 0;
-      color: #b3b3b3;
-    }
-
-   
-    .episodes {
-      margin-top: 20px;
-    }
-
-    .episodes-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-
-    .episode-card {
-      background-color: #2c2c2c;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    }
-    .episode-card:hover {
-    background-color: #383838; /* Slightly lighter background */
-    transition: background-color 0.3s ease-in-out;
-}
-
-
-    .episode-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    .episode-description,
-    .episode-duration,
-    .episode-release-date {
-      font-size: 12px;
-      color: #b3b3b3;
-    }
-
-    .platform-links {
-      display: flex;
-      flex-direction: column;
-      margin-top: 20px;
-    }
-
-    .platform-link {
-      font-size: 16px;
-      color: #1db954;
-      text-decoration: none;
-      margin-bottom: 10px;
-      transition: color 0.3s;
-    }
-
-    .platform-link:hover {
-      color: #ffffff;
-    }
-
-    /* Icons styling */
-    .platform-link i {
-      margin-right: 8px;
-    }
-    .material-icons{
-        font-size: 18px;
-  color: gray;
-
-    }
-    @media (min-width: 1024px){
-       
-       #podcast-card {
-    
-    width: 100%;
-  max-width: 90%;
-  background-color: black;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-}
-
-#podcast-cover{
-   width: 20%;
-}
-   }
-    
-
-  </style>
-  <style>
-      #skeleton-container {
-            width: 100%;
-            max-width: 390px;
-            background-color: black;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.6);
-        }
-
-        .skeleton {
-            background-color: #2c2c2c;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 0.3; }
-            100% { opacity: 0.6; }
-        }
-
-        .skeleton-cover {
-            width: 100%;
-            height: 200px;
-        }
-
-        .skeleton-title {
-            width: 80%;
-            height: 24px;
-            margin: 15px 0;
-        }
-
-        .skeleton-host {
-            width: 60%;
-            height: 20px;
-            margin-bottom: 10px;
-        }
-
-        .skeleton-description {
-            width: 100%;
-            height: 60px;
-            margin-bottom: 10px;
-        }
-
-        .skeleton-episode {
-            width: 100%;
-            height: 80px;
-            margin-bottom: 10px;
-        }
-
-        .skeleton-platform {
-            width: 100%;
-            height: 20px;
-            margin-bottom: 10px;
-        }
-
-  </style>
 </head>
 
 
@@ -444,5 +58,31 @@ fetchPodcastData();
     <div id="platform-links" class="platform-links">
     </div>
 </div>
+
+
+
+<div class="body" id="body">
+    <div class="player-container" id="playerContainer">
+      <i class="fa-solid fa-xmark" id="closeButton"></i>
+      
+      <img src="https://i.ibb.co/SDCQYDCc/The-Tech-Chronicles.png" alt="Podcast Cover" class="cover" id="podcastCover">
+      <div class="title" id="podcastTitle"></div>
+      <div class="description" id="podcastDescription"></div>
+      <div class="progress-container" id="progressContainer">
+          <input type="range" min="0" max="2120" value="0" id="progress">
+      </div>
+      <div class="controls" id="controls">
+          <button class="control-btn"  id="rewindButton"><i class="fa-solid fa-backward" id="rewindIcon"></i></button>
+          <button class="control-btn"  id="playButton"><i class="fa-solid fa-play" id="playIcon"></i></button>
+          <button class="control-btn"  id="fastForwardButton"><i class="fa-solid fa-forward" id="fastForwardIcon"></i></button>
+      </div>
+      <audio id="audio" src="https://whyp.it/tracks/embed?id=258077&token=5ocGO"></audio>
+    </div>
+  </div>
+  
+
+
+
+
 </body>
 </html>

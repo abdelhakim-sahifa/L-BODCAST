@@ -1,0 +1,46 @@
+
+
+/* Skeleton Loading Styles */
+.skeleton {
+ background-color: var(--bg-secondary);
+ border-radius: 10px;
+ animation: shimmer 1.5s infinite linear;
+ background: linear-gradient(to right, var(--bg-secondary) 0%, var(--bg-card) 50%, var(--bg-secondary) 100%);
+ background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+ 0% {
+     background-position: -200% 0;
+     opacity: 0;
+   
+ }
+
+ 100% {
+     background-position: 200% 0;
+     opacity: 0.5;
+    
+ }
+}
+
+.skeleton.categorieLabel {
+ width: 100px;
+ height: 30px;
+}
+
+.skeleton.podcastCard {
+ width: 250px ;
+ height: 250px;
+}
+
+.skeleton.creatorCard {
+ width: 100px;
+ height: 100px;
+}
+
+.loading {
+ display: flex;
+ flex-direction: column;
+ gap: 20px;
+ padding: 20px;
+}

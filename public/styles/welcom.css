@@ -1,0 +1,101 @@
+
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+   *{
+    font-family: "Poppins", serif;
+
+   }
+    body{
+        background-color: black;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .illustration{
+        width: 187px;
+        height: 290px;
+        transform: rotate(-13deg);
+        position: relative;
+        bottom: -200px;
+        z-index: 9999;
+        
+
+    }
+    .logo{
+        width: 356px;
+        height: 300px;
+        position: relative;
+        bottom: -100px;
+    }
+    label{
+        color: white;
+        font-weight: 600;
+        font-size: 35px;
+        padding: 10px;
+        position: fixed;
+        top: 0;
+        z-index: 99999;
+        padding: 10;
+
+    }
+    .tunin{
+        padding: 20px;
+      
+        background-color: red;
+        border: solid 4px white ;
+        font-size: 20px;
+        font-weight: 800;
+        border-radius: 5px;
+        width: 261px;
+        cursor: pointer;
+        height: 60px;
+    }
+    .tunin::after{
+        display: flex;
+        justify-content: start;
+        align-items: center;
+     content: 'TUN IN';
+      background-color: white;
+      padding: 20px;
+      width: 230px;
+      border-radius: 5px;
+      height: 20px;
+
+      position: relative;
+      top: -65px;
+      right: 43px;
+     cursor: pointer;
+
+
+     transition: all .3s ease;
+
+    }
+    .tunin:hover:after{
+        background-color: black;
+        color: white;
+        border: solid 4px white;
+        top: -54px;
+        right: 30px;
+     content: 'TUN IN NOW!' ;
+
+        
+    
+     transition: all .3s ease;
+    }
+
+i{
+    color: black;
+    font-size: 25px;
+    position: relative;
+    z-index: 9999;
+    left: 80px;
+    top: -16px;
+
+    
+}
+
+.tunin:hover i{
+    opacity: 0;
+}
+
+

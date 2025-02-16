@@ -1,0 +1,155 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* Define color variables in :root */
+:root {
+/* Background Colors */
+--bg-primary: black; /* Dark gray for primary background */
+--bg-secondary: #1E1E1E; /* Slightly lighter gray for secondary elements */
+--bg-card: #2A2A2A; /* Card background, slightly lighter than secondary */
+
+/* Text Colors */
+--text-primary: #E0E0E0; /* Light gray for primary text */
+--text-secondary: #B0B0B0; /* Slightly muted gray for secondary text */
+--text-hover: #FFFFFF; /* Pure white for hover states */
+
+/* Border Colors */
+--border-primary: #404040; /* Subtle gray for borders */
+--border-secondary: #2A2A2A; /* Slightly darker gray for secondary borders */
+
+/* Shadow Colors */
+--shadow-primary: rgba(0, 0, 0, 0.5); /* Dark shadow for depth */
+}
+
+* {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+nav {
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 150px;
+}
+
+#profilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#bottomDiv {
+    padding: 20px;
+    width: 100%;
+    color: var(--text-secondary);
+    background-color: var(--bg-secondary);
+    height: 400px;
+    position: fixed;
+    bottom: -400px;  /* Initially hidden */
+    left: 0;
+    border-radius: 20px 20px 0 0;
+    transition: bottom 0.3s ease-in-out;
+}
+
+/* Show class to make it slide up */
+#bottomDiv.show {
+    bottom: 0;
+}
+
+.categories-section, .TrendingPodcasts-section {
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.sectionTitle {
+    color: var(--text-primary);
+    padding: 0 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#categories {
+    margin-top: 15px;
+    gap: 10px;
+    padding: 0 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    display: flex;
+}
+
+.categorieLabel {
+    color: var(--text-primary);
+    border: solid 2px var(--border-primary);
+    padding: 4px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.chosenCategorie.categorieLabel {
+    color: var(--text-secondary);
+    border: solid 2px var(--border-primary);
+    background-color: var(--bg-secondary);
+    padding: 4px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+#TrendingPodcasts {
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+.podcastCard {
+    border: solid 2px var(--border-secondary);
+    border-radius: 10px;
+    width: 250px;
+    height: 250px;
+    transition: all 0.3s ease-in-out;
+}
+
+.podcastCard:hover {
+    border: solid 2px var(--border-primary);
+    box-shadow: 1px -1px 10px 2px var(--shadow-primary);
+    transition: all 0.3s ease-in-out;
+}
+
+#TopCreators {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    overflow-x: scroll;
+    scrollbar-width: none;
+}
+
+.creatorCard {
+    border: solid 2px var(--border-secondary);
+    width: 100px;
+    height: 100px;
+    transition: all 0.3s ease-in-out;
+    border-radius: 18px;
+}
+
+.creatorCard:hover {
+    border: solid 2px var(--border-primary);
+    transition: all 0.3s ease-in-out;
+    box-shadow: 1px -1px 10px 2px var(--shadow-primary);
+}

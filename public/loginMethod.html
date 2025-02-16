@@ -7,9 +7,10 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"  >
         <link rel="shortcut icon" href="https://i.ibb.co/TDBpFZ8P/favicon.png" type="image/x-icon">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="base_styles.css">
+        <link rel="stylesheet" href="/styles/loginMethod.css">
 
     </head>
-    <link rel="stylesheet" href="base_styles.css">
 <body>
 
     
@@ -29,177 +30,10 @@
 
    </div>
     
-    <style>
-           body{
-        background-color: black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-.logo{
-    width: 200px;
-    height: 200px;
+   <script type="module" src="/scripts/login_Method/redirect.js"></script>
+   <script type="module" src="/scripts/login_Method/firebase_googleSinUp.js"></script>
+
   
-
-
-}
-    .login::after{
-        content: 'LOGIN';
-    }
-    .space{
-        height: 0px;
-    }
-    .sinup::after{
-        content: 'SINUP';
-  background-color: black;
-  color: white;
-  border:solid 4px white; 
-  width: 225px;
-
-    }
-
-    .sinup:hover:after{
- color: black;
- background-color: white;
-    }
-
-    .sinup{
-        background-color: white;
-    }
-    .sinup i {
-        color: white;
-    }
-
-    .container{
-        position: fixed;
-        bottom: 100px;
-    }
-
-    .or{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        top: -30px;
-    }
-
-    .diverder{
-        background-color: white;
-        height: 2px;
-        width: 50%;
-    }
-    .or label {
-        
-        color: white;
-        padding: 10px;
-        font-family: "Poppins", serif;
-        font-weight: 600;
-
-    }
-    .googleSinup::after{
-        content: 'Google';
-    }
-    .googleSinup:hover:after{
-        content: 'Continue with Google';
-    }
-
-    </style>
-
-    <script>
-    document.getElementById('sinup').addEventListener('click'
-    ,
-    function(){
-        window.location.href = "signup.html"
-    }
-)
-
-
-document.getElementById('login').addEventListener('click'
-    ,
-    function(){
-        window.location.href = "login.html"
-    })
-
-    </script>
-<script type="module">
-    // Import Firebase modules
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js";
-
-    // Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDFmufOx1aX_JMJsfeXMIzD0nGqQ1pSZIA",
-        authDomain: "l-bodcast.firebaseapp.com",
-        projectId: "l-bodcast",
-        databaseURL: "https://l-bodcast-default-rtdb.firebaseio.com/",
-        storageBucket: "l-bodcast.appspot.com",
-        messagingSenderId: "1007184602665",
-        appId: "1:1007184602665:web:dae80c9b3f208f5749de38",
-        measurementId: "G-BX9F49FM08"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const provider = new GoogleAuthProvider();
-    const db = getDatabase(app); // Pass app to ensure correct initialization
-
-    // Google Sign-In button handler
-    document.getElementById('googlebtn').addEventListener('click', async () => {
-        try {
-            const user = await googleSignIn();
-            if (!user) {
-                console.error("User not authenticated");
-                return;
-            }
-
-            // Extract user details
-            const fullName = user.displayName || "";
-            const nameParts = fullName.split(" ");
-            const firstName = nameParts[0] || "";
-            const lastName = nameParts.slice(1).join(" ") || "";
-            const profilePic = user.photoURL || "";
-
-            // Store user data in Firebase Realtime Database
-            await set(ref(db, 'users/' + user.uid), {
-                firstName: firstName,
-                lastName: lastName,
-                email: user.email,
-                profilePic: profilePic
-            });
-
-            console.log("User data stored successfully");
-
-            // Redirect to username selection page
-            window.location.href = "chooseUsername.html?useruid=" + user.uid + "&name=" + encodeURIComponent(user.displayName);
-
-        } catch (error) {
-            console.error('Google Sign-In error:', error.message);
-        }
-    });
-
-    // Function to handle Google sign-in
-    const googleSignIn = async () => {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            return result.user; // Return the authenticated user
-        } catch (error) {
-            console.error("Sign-in error:", error.message);
-            throw new Error(error.message);
-        }
-    };
-
-    // Listen for authentication state changes
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            console.log("User is signed in:", user.displayName);
-        } else {
-            console.log("User is logged out");
-        }
-    });
-</script>
 
 </body>
 </html>
