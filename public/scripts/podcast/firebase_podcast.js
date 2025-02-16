@@ -47,12 +47,20 @@ if (snapshot.exists()) {
     const data = snapshot.val();
    const hostDetails = await getHostDetails(data.host)
    document.title = `${data.title} - L'BODCAST`;
+   document.querySelector(".fa-xmark").addEventListener('click'
+    , ()=> {
+        const playerBody = document.querySelector('.body')
+        playerBody.style.bottom = "-100vh"
+        document.getElementById('favicon').href = "https://i.ibb.co/TDBpFZ8P/favicon.png"
+        document.title = `${data.title} - L'BODCAST`;
 
+    }
+)
     // Fill data into HTML elements
     document.getElementById("podcast-cover").src = data.cover;
     document.getElementById("podcast-title").textContent = data.title;
     document.getElementById("podcast-description").textContent = data.description;
-    document.getElementById("podcast-host").innerHTML = ` <img src="${hostDetails.avatar}"><p> ${hostDetails.hostName}</p><i class="material-icons">${hostDetails.verified? "verified" : ""}</i>`;
+    document.getElementById("podcast-host").innerHTML = ` <img src="${hostDetails.avatar}"><p> ${hostDetails.hostName}</p><i class="material-icons">${hostDetails.verified? "verified" : ""}</i> ● <p class="flower-count"> ${hostDetails.followers_count} followers </p>` ;
     document.getElementById("podcast-guests").textContent = `Guests: ${data.guests.join(", ")}`;
     document.getElementById("podcast-category").textContent = `Category: ${data.category}`;
     document.getElementById("podcast-language").textContent = `Language: ${data.language}`;
@@ -70,9 +78,10 @@ if (snapshot.exists()) {
             () =>{
                 const playerBody = document.querySelector('.body')
                 playerBody.style.bottom = "0"
-                console.log(episode)
+                document.title = episode.title + " | " + hostDetails.hostName
                 document.getElementById('podcastTitle').innerHTML = episode.title
                 document.getElementById('podcastDescription').innerHTML = episode.description
+                document.getElementById('favicon').href = episode.episode_cover
                 document.getElementById('podcastCover').src = episode.episode_cover
                 document.getElementById('audio').src = episode.audio_url
             }

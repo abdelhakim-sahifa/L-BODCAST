@@ -3,12 +3,7 @@
     const progress = document.getElementById("progress");
     const playIcon = document.getElementById("playIcon");
     let isPlaying = false;
-    document.querySelector(".fa-xmark").addEventListener('click'
-        , ()=> {
-            const playerBody = document.querySelector('.body')
-            playerBody.style.bottom = "-100vh"
-        }
-    )
+   
     function togglePlay() {
         if (isPlaying) {
             audio.pause();
