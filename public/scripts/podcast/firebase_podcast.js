@@ -78,12 +78,17 @@ const hostSection = `
   
 `
 
+
+
     // Fill data into HTML elements
     document.getElementById("podcast-cover").src = data.cover;
     document.getElementById("podcast-title").textContent = data.title;
     document.getElementById("podcast-description").textContent = data.description;
     document.getElementById("podcast-host").innerHTML = hostSection ;
+  
     isFollowed(data.host)
+
+    
     const followBtn = document.getElementById('followBtn')
 // Ensure the click handler is an async function
 followBtn.addEventListener('click', async () => {
@@ -197,6 +202,13 @@ platformLink.appendChild(textNode);
 // Append the link to the container
 platformLinksContainer.appendChild(platformLink);
 }
+
+document.querySelector('.hostAndName').addEventListener('click'
+    , ()=> {
+        window.location.href = `creator.html?id=${data.host}`
+    }
+)
+
 
 skeletonContainer.style.display = "none"
 podcastContainer.style.display = "block"

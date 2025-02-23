@@ -124,7 +124,7 @@ const creatorCard = document.createElement('img') ;
 creatorCard.src = creatorAvatar 
 creatorCard.id = creator_id 
 creatorCard.className = 'creatorCard'
-creatorCard.addEventListener('click' , () => {console.log(creator_id) ; })
+creatorCard.addEventListener('click' , () => {window.location.href = "creator.html?id=" + creator_id })
 topCreators.append(creatorCard)
 
 
